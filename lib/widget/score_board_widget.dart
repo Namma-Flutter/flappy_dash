@@ -12,7 +12,7 @@ class _ScoreBoardState extends State<ScoreBoard> {
   final _scoreCollRef = FirebaseFirestore.instance
       .collection('scores')
       .where("score", isNotEqualTo: 0)
-      .orderBy("score", descending: false)
+      .orderBy("score", descending: true)
       .withConverter<Score>(
         fromFirestore: (snapshots, _) => Score.fromJson(snapshots.data()!),
         toFirestore: (score, _) => score.toJson(),
@@ -111,12 +111,17 @@ class ScoreCard extends StatelessWidget {
           CircleAvatar(
             backgroundColor: Colors.blue,
             radius: 40,
-            child: Image.network(
-              "${score.pic}.jpg",
-              errorBuilder: (context, error, stackTrace) =>
-                  Text("${index + 1}"),
-              height: 80,
-              width: 80,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(100),
+              child: Image.network(
+                "${score.pic}",
+                errorBuilder: (context, error, stackTrace) => Text(
+                  "${index + 1}",
+                  style: const TextStyle(fontSize: 20, color: Colors.white),
+                ),
+                height: 80,
+                width: 80,
+              ),
             ),
           ),
           const SizedBox(width: 10),
