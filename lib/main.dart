@@ -1,4 +1,4 @@
-import 'package:flappy_dash/audio_helper.dart';
+// import 'package:flappy_dash/audio_helper.dart';
 import 'package:flappy_dash/bloc/auth/auth_cubit.dart';
 import 'package:flappy_dash/bloc/game/game_cubit.dart';
 import 'package:flappy_dash/login_page.dart';
@@ -26,14 +26,14 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (BuildContext context) => GameCubit(
-            // getIt.get<AudioHelper>(),
-          ),
+              // getIt.get<AudioHelper>(),
+              ),
         ),
         BlocProvider(create: (BuildContext context) => AuthCubit())
       ],
       child: MaterialApp(
         title: 'Flappy Dash',
-        theme: ThemeData(fontFamily: 'Chewy'),
+        theme: ThemeData(fontFamily: 'Angry'),
         home: const LoginPage(),
       ),
     );
