@@ -98,7 +98,10 @@ class GameOverWidget extends StatelessWidget {
                         width: 70,
                       ),
                       ElevatedButton(
-                        onPressed: () => context.read<AuthCubit>().loggedOut(),
+                        onPressed: () {
+                          context.read<AuthCubit>().loggedOut();
+                          context.read<GameCubit>().restartGame();
+                        },
                         style: ButtonStyle(
                             backgroundColor:
                                 WidgetStatePropertyAll(Colors.red)),
