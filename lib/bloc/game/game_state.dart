@@ -3,28 +3,28 @@ part of 'game_cubit.dart';
 class GameState with EquatableMixin {
   const GameState({
     this.currentScore = 0,
-    this.personalHighSoce = 0,
+    this.personalHighScore = 0,
     this.currentPlayingState = PlayingState.idle,
   });
 
-  final int currentScore, personalHighSoce;
+  final int currentScore, personalHighScore;
   final PlayingState currentPlayingState;
 
   GameState copyWith({
     int? currentScore,
-    int? personalHighSoce,
+    int? personalHighScore,
     PlayingState? currentPlayingState,
   }) =>
       GameState(
         currentScore: currentScore ?? this.currentScore,
-        personalHighSoce: personalHighSoce ?? this.personalHighSoce,
+        personalHighScore: personalHighScore ?? this.personalHighScore,
         currentPlayingState: currentPlayingState ?? this.currentPlayingState,
       );
 
   @override
   List<Object> get props => [
         currentScore,
-        personalHighSoce,
+        personalHighScore,
         currentPlayingState,
       ];
 }

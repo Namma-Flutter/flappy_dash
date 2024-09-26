@@ -38,14 +38,13 @@ class _ScoreBoardState extends State<ScoreBoard> {
       child: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
-          const Expanded(
-              child: Text(
+          const Text(
             "Score Board",
             style: TextStyle(
               fontSize: 52,
               letterSpacing: 2,
             ),
-          )),
+          ),
           Expanded(
             child: StreamBuilder<QuerySnapshot<Score>>(
               stream: _scoreCollRef.snapshots(),
@@ -67,6 +66,7 @@ class _ScoreBoardState extends State<ScoreBoard> {
                   itemBuilder: (context, index) {
                     return ScoreCard(
                       data.docs[index].data(),
+                      index: index,
                     );
                   },
                 );
@@ -96,14 +96,41 @@ class _ScoreBoardState extends State<ScoreBoard> {
 
 class ScoreCard extends StatelessWidget {
   final Score score;
-  const ScoreCard(this.score, {super.key});
+  final int index;
+  const ScoreCard(this.score, {super.key, required this.index});
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: const EdgeInsets.symmetric(vertical: 7, horizontal: 10),
+      constraints: const BoxConstraints(maxWidth: 500),
+      width: MediaQuery.sizeOf(context).width * .8,
       child: Row(
         mainAxisSize: MainAxisSize.min,
-        children: [Text(score.name), Text("${score.score}")],
+        children: [
+          CircleAvatar(
+            backgroundColor: Colors.blue,
+            radius: 40,
+            child: Image.network(
+              "${score.pic}.jpg",
+              errorBuilder: (context, error, stackTrace) =>
+                  Text("${index + 1}"),
+              height: 80,
+              width: 80,
+            ),
+          ),
+          const SizedBox(width: 10),
+          Text(
+            score.name,
+            style: TextStyle(fontSize: 20),
+          ),
+          const Spacer(),
+          Text(
+            "${score.score}",
+            style: TextStyle(
+                color: const Color.fromARGB(255, 255, 152, 7), fontSize: 30),
+          )
+        ],
       ),
     );
   }
@@ -111,12 +138,16 @@ class ScoreCard extends StatelessWidget {
 
 @immutable
 class Score {
-  const Score({required this.name, required this.score});
+  const Score({required this.name, this.pic, required this.score});
   final String name;
+  final String? pic;
   final int score;
   Score.fromJson(Map<String, Object?> json)
-      : this(name: (json['name'] as String), score: json['score'] as int);
+      : this(
+            name: (json['name'] as String),
+            pic: (json['pic'] as String?),
+            score: json['score'] as int);
   Map<String, Object?> toJson() {
-    return {'name': name, 'score': score};
+    return {'name': name, 'score': score, "pic": pic};
   }
 }

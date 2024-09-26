@@ -28,7 +28,6 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<User?> signInWithGoogle() async {
-    await Firebase.initializeApp();
     User? user;
     FirebaseAuth auth = FirebaseAuth.instance;
     GoogleAuthProvider authProvider = GoogleAuthProvider();

@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:flappy_dash/bloc/auth/auth_cubit.dart';
 import 'package:flappy_dash/bloc/game/game_cubit.dart';
 import 'package:flappy_dash/widget/score_board_widget.dart';
 import 'package:flutter/material.dart';
@@ -19,18 +20,24 @@ class GameOverWidget extends StatelessWidget {
             child: Center(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const Text(
                     'GAME OVER!',
                     style: TextStyle(
-                      shadows: [Shadow(color: Colors.red, blurRadius: 1)],
+                      shadows: [
+                        Shadow(
+                            color: Colors.blue,
+                            offset: Offset.zero,
+                            blurRadius: 5)
+                      ],
                       color: Color.fromARGB(255, 255, 221, 0),
                       fontWeight: FontWeight.bold,
-                      fontSize: 48,
+                      fontSize: 70,
                       letterSpacing: 2,
                     ),
                   ),
-                  const SizedBox(height: 6),
+                  const SizedBox(height: 15),
                   Text(
                     'Score: ${state.currentScore}',
                     style: const TextStyle(
@@ -39,27 +46,13 @@ class GameOverWidget extends StatelessWidget {
                       letterSpacing: 2,
                     ),
                   ),
-                  InkWell(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        showDialog(
-                            context: context,
-                            builder: (_) => const ScoreBoard());
-                      },
-                      style: ButtonStyle(
-                          backgroundColor:
-                              WidgetStatePropertyAll(Colors.orangeAccent)),
-                      child: const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Text(
-                          'Score board',
-                          style: TextStyle(
-                            fontSize: 22,
-                            color: Colors.white,
-                            letterSpacing: 2,
-                          ),
-                        ),
-                      ),
+                  const SizedBox(height: 6),
+                  Text(
+                    'Personal Best: ${state.personalHighScore}',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 22,
+                      letterSpacing: 2,
                     ),
                   ),
                   const SizedBox(height: 60),
@@ -75,6 +68,53 @@ class GameOverWidget extends StatelessWidget {
                         ),
                       ),
                     ),
+                  ),
+                  const SizedBox(height: 100),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (_) => const ScoreBoard());
+                        },
+                        style: ButtonStyle(
+                            backgroundColor:
+                                WidgetStatePropertyAll(Colors.orangeAccent)),
+                        child: const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text(
+                            'Score board',
+                            style: TextStyle(
+                              fontSize: 22,
+                              color: Colors.white,
+                              letterSpacing: 2,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 70,
+                      ),
+                      ElevatedButton(
+                        onPressed: () => context.read<AuthCubit>().loggedOut(),
+                        style: ButtonStyle(
+                            backgroundColor:
+                                WidgetStatePropertyAll(Colors.red)),
+                        child: const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text(
+                            'Log out',
+                            style: TextStyle(
+                              fontSize: 22,
+                              letterSpacing: 2,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
