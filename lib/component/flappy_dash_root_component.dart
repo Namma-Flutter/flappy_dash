@@ -14,7 +14,7 @@ class FlappyDashRootComponent extends Component
     with HasGameRef<FlappyDashGame>, FlameBlocReader<GameCubit, GameState> {
   late Dash _dash;
   late PipePair _lastPipe;
-  static const _pipesDistance = 400.0;
+  static const _pipesDistance = 10000.0;
 
   @override
   Future<void> onLoad() async {

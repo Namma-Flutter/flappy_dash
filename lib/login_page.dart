@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flappy_dash/bloc/auth/auth_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flappy_dash/main_page.dart';
 import 'package:flutter/material.dart';
 
@@ -29,14 +28,10 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<User?> signInWithGoogle() async {
-    // Initialize Firebase
     await Firebase.initializeApp();
     User? user;
     FirebaseAuth auth = FirebaseAuth.instance;
-    // The `GoogleAuthProvider` can only be
-    // used while running on the web
     GoogleAuthProvider authProvider = GoogleAuthProvider();
-
     try {
       final UserCredential userCredential =
           await auth.signInWithPopup(authProvider);

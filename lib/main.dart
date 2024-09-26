@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (BuildContext context) => GameCubit(
-            getIt.get<AudioHelper>(),
+            // getIt.get<AudioHelper>(),
           ),
         ),
         BlocProvider(create: (BuildContext context) => AuthCubit())

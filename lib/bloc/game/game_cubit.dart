@@ -6,13 +6,13 @@ part 'game_state.dart';
 
 class GameCubit extends Cubit<GameState> {
   GameCubit(
-    this._audioHelper,
+    // this._audioHelper,
   ) : super(const GameState());
 
-  final AudioHelper _audioHelper;
+  // final AudioHelper _audioHelper;
 
   void startPlaying() {
-    _audioHelper.playBackgroundAudio();
+    // _audioHelper.playBackgroundAudio();
     emit(state.copyWith(
       currentPlayingState: PlayingState.playing,
       currentScore: 0,
@@ -20,14 +20,14 @@ class GameCubit extends Cubit<GameState> {
   }
 
   void increaseScore() {
-    _audioHelper.playScoreCollectSound();
+    // _audioHelper.playScoreCollectSound();
     emit(state.copyWith(
       currentScore: state.currentScore + 1,
     ));
   }
 
   void gameOver() {
-    _audioHelper.stopBackgroundAudio();
+    // _audioHelper.stopBackgroundAudio();
     emit(state.copyWith(
       currentPlayingState: PlayingState.gameOver,
     ));

@@ -1,4 +1,3 @@
-
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
@@ -48,7 +47,8 @@ class FlappyDashWorld extends World
   @override
   Future<void> onLoad() async {
     super.onLoad();
-    await getIt.get<AudioHelper>().initialize();
+    // await getIt.get<AudioHelper>().initialize();
+    add(ScreenHitbox());
     add(
       FlameBlocProvider<GameCubit, GameState>(
         create: () => game.gameCubit,

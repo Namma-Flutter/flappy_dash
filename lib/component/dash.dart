@@ -19,6 +19,7 @@ class Dash extends PositionComponent
           size: Vector2.all(80.0),
           anchor: Anchor.center,
           priority: 10,
+          
         );
 
   late Sprite _dashSprite;
@@ -76,6 +77,8 @@ class Dash extends PositionComponent
       bloc.increaseScore();
       other.removeFromParent();
     } else if (other is Pipe) {
+      bloc.gameOver();
+    } else if (other.y >= 0) {
       bloc.gameOver();
     }
   }
