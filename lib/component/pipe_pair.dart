@@ -9,8 +9,8 @@ class PipePair extends PositionComponent
     with FlameBlocReader<GameCubit, GameState> {
   PipePair({
     required super.position,
-    this.gap = 200.0,
-    this.speed = 200.0,
+    this.gap = 300.0,
+    this.speed = 150.0,
   });
 
   final double gap;

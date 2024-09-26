@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flappy_dash/bloc/auth/auth_cubit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flappy_dash/main_page.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -12,33 +14,57 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  bool? isLoggedIn;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    FirebaseAuth.instance
-  .authStateChanges()
-  .listen((User? user) {
-    setState(() {
-      if (user == null) {
-      print('User is currently signed out!');
-      isLoggedIn=false;
-    } else {
-      print('User is signed in!');
-      isLoggedIn=true;
-    }
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      if (user != null) {
+        print('User is currently signed in! ${user.displayName}');
+        context.read<AuthCubit>().loggedIn(user);
+      } else {
+        print('User is signed out!');
+        context.read<AuthCubit>().loggedOut();
+      }
     });
-  });
   }
+
+  Future<User?> signInWithGoogle() async {
+    // Initialize Firebase
+    await Firebase.initializeApp();
+    User? user;
+    FirebaseAuth auth = FirebaseAuth.instance;
+    // The `GoogleAuthProvider` can only be
+    // used while running on the web
+    GoogleAuthProvider authProvider = GoogleAuthProvider();
+
+    try {
+      final UserCredential userCredential =
+          await auth.signInWithPopup(authProvider);
+      user = userCredential.user;
+    } catch (e) {
+      print(e);
+    }
+
+    if (user != null) {}
+    return user;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      child:switch (isLoggedIn) {
-        true => const MainPage(),
-        false => Container(),
-        _=> const CircularProgressIndicator()
-      },
+      child: BlocBuilder<AuthCubit, AuthState>(
+          builder: (context, state) => switch (state.isLoggedIn) {
+                true => const MainPage(),
+                false => Center(
+                    child: TextButton(
+                      onPressed: () {
+                        signInWithGoogle();
+                      },
+                      child: const Text("Sign-in"),
+                    ),
+                  ),
+                _ => const CircularProgressIndicator()
+              }),
     );
   }
 }
