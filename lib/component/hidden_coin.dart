@@ -13,7 +13,7 @@ class HiddenCoin extends PositionComponent {
   @override
   Future<void> onLoad() async {
     super.onLoad();
-    _dashSprite = await Sprite.load('dash.png');
+    _dashSprite = await Sprite.load('flutter.png');
     final radius = size.x / 2;
     final center = size / 2;
     add(CircleHitbox(

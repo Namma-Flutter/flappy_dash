@@ -75,7 +75,7 @@ class _ScoreBoardState extends State<ScoreBoard> {
           ),
           ElevatedButton(
             onPressed: () => Navigator.pop(context),
-            style: ButtonStyle(
+            style:const ButtonStyle(
                 backgroundColor: WidgetStatePropertyAll(Colors.redAccent)),
             child: const Padding(
               padding: EdgeInsets.all(8.0),
@@ -127,13 +127,13 @@ class ScoreCard extends StatelessWidget {
           const SizedBox(width: 10),
           Text(
             score.name,
-            style: TextStyle(fontSize: 20),
+            style:const TextStyle(fontSize: 20),
           ),
           const Spacer(),
           Text(
             "${score.score}",
-            style: TextStyle(
-                color: const Color.fromARGB(255, 255, 152, 7), fontSize: 30),
+            style:const TextStyle(
+                color:  Color.fromARGB(255, 255, 152, 7), fontSize: 30),
           )
         ],
       ),
